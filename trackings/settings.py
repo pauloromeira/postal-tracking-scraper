@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from fake_useragent import UserAgent
+
 # Scrapy settings for trackings project
 #
 # For simplicity, this file contains only settings considered important or
@@ -16,10 +18,10 @@ NEWSPIDER_MODULE = 'trackings.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'trackings (+http://www.yourdomain.com)'
+USER_AGENT = UserAgent()['chrome']
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32

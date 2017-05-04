@@ -11,6 +11,7 @@ cffi==1.10.0              # via cryptography
 constantly==15.1.0        # via twisted
 cryptography==1.8.1       # via pyopenssl
 cssselect==1.0.1          # via parsel, scrapy
+fake-useragent==0.1.7
 idna==2.5                 # via cryptography
 incremental==16.10.1      # via twisted
 lxml==3.7.3               # via parsel, scrapy
