@@ -10,16 +10,27 @@ class CorreiosSpider(scrapy.Spider):
     name = 'correios'
     allowed_domains = ['correios.com.br']
 
+    def __init__(self, trackings, *args, **kwargs):
+        super(CorreiosSpider, self).__init__(*args, **kwargs)
+        self.tracking_numbers = trackings
+
     def start_requests(self):
         url='http://www2.correios.com.br/sistemas/rastreamento/resultado.cfm'
         headers={ 'Referer':'http://www.correios.com.br/para-voce' }
-        formdata={ 'objetos': '<tracking-number>' }
 
-        yield FormRequest(url, headers=headers, formdata=formdata)
+        for tracking_number in self.tracking_numbers.split(';'):
+            tracking_number = tracking_number.strip()
+            formdata={ 'objetos': tracking_number }
+            meta = { 'tracking_number': tracking_number }
+
+            yield FormRequest(url, meta=meta, headers=headers, formdata=formdata)
 
     def parse(self, response):
         for event in response.css('table.listEvent.sro tr'):
             loader = ItemLoader(ItemTrack(), event)
+            loader.add_value('tracking_number',
+                             response.meta['tracking_number'])
+
             *timestamp, location = \
                     loader.get_css('td.sroDtEvent ::text', re='[^\s].*[^\s]')
 
