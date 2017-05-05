@@ -14,6 +14,9 @@ class CorreiosSpider(scrapy.Spider):
         self.tracking_numbers = trackings
 
     def start_requests(self):
+        # TODO [romeira]: adicionar script run.sh {05/05/17 13:47}
+        # TODO [romeira]: mudar e testar {05/05/17 13:47}
+        # url='http://www2.correios.com.br/sistemas/rastreamento/resultado_semcontent.cfm'
         url='http://www2.correios.com.br/sistemas/rastreamento/resultado.cfm'
         headers={ 'Referer':'http://www.correios.com.br/para-voce' }
 
