@@ -8,6 +8,7 @@ from trackings.items import ItemTrackLoader
 class CorreiosSpider(scrapy.Spider):
     name = 'correios'
     allowed_domains = ['correios.com.br']
+    custom_settings = { 'RETRY_TIMES': 5 }
 
     def __init__(self, trackings, *args, **kwargs):
         super(CorreiosSpider, self).__init__(*args, **kwargs)
