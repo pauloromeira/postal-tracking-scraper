@@ -1,5 +1,5 @@
 # Postal Tracking Scraper
-A scraper that gathers tracking events from postal orders.
+A scraper that gathers tracking events from postal services.
 
 ### Currently Suported Carriers
 
