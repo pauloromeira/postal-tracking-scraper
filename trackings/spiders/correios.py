@@ -3,7 +3,6 @@
 import scrapy
 from scrapy import FormRequest
 from trackings.items import ItemTrackLoader
-from datetime import datetime
 
 
 class CorreiosSpider(scrapy.Spider):
