@@ -1,29 +1,25 @@
 # -*- coding: utf-8 -*-
 
-# Define here the models for your scraped items
-#
-# See documentation in:
-# http://doc.scrapy.org/en/latest/topics/items.html
-
-from scrapy import Item, Field
-from scrapy.loader.processors import Compose, Join, TakeFirst
 from datetime import datetime
+from scrapy import Item, Field
+from scrapy.loader import ItemLoader
+from scrapy.loader.processors import Compose, MapCompose, Join
 from unicodedata import normalize
+from w3lib.html import remove_tags
 
-# class Item(Item):
-#     tracking_number = Field()
-#     description = Field()
 
 class ItemTrack(Item):
     tracking_number = Field()
     title = Field()
     description = Field()
-    location = Field(
-            output_processor =
-                Compose(TakeFirst(), lambda l: normalize('NFKC', l))
-            )
-    timestamp = Field(
-            output_processor = 
-                Compose(Join(' '),
-                        lambda d: datetime.strptime(d, '%d/%m/%Y %H:%M'))
-                )
+    location = Field()
+    timestamp = Field()
+
+class ItemTrackLoader(ItemLoader):
+    default_item_class = ItemTrack
+    default_input_processor = MapCompose(remove_tags,
+                                         lambda s: normalize('NFKC', s),
+                                         str.strip)
+    default_output_processor = Compose(Join(' '), str.strip)
+    timestamp_out = Compose(Join(' '),
+                            lambda d: datetime.strptime(d, '%d/%m/%Y %H:%M'))

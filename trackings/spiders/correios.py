@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
+
 import scrapy
 from scrapy import FormRequest
-from scrapy.loader import ItemLoader
-from trackings.items import ItemTrack
+from trackings.items import ItemTrackLoader
 from datetime import datetime
 
 
@@ -23,11 +23,14 @@ class CorreiosSpider(scrapy.Spider):
             formdata={ 'objetos': tracking_number }
             meta = { 'tracking_number': tracking_number }
 
-            yield FormRequest(url, meta=meta, headers=headers, formdata=formdata)
+            yield FormRequest(url,
+                              meta=meta,
+                              headers=headers,
+                              formdata=formdata)
 
     def parse(self, response):
-        for event in response.css('table.listEvent.sro tr'):
-            loader = ItemLoader(ItemTrack(), event)
+        for track in response.css('table.listEvent.sro tr'):
+            loader = ItemTrackLoader(selector=track)
             loader.add_value('tracking_number',
                              response.meta['tracking_number'])
 
@@ -36,6 +39,7 @@ class CorreiosSpider(scrapy.Spider):
 
             loader.add_value('location', location)
             loader.add_value('timestamp', timestamp)
-            import ipdb; ipdb.set_trace()
+            loader.add_css('title', 'td.sroLbEvent > strong')
+            loader.add_css('description', 'td.sroLbEvent::text')
 
             yield loader.load_item()
