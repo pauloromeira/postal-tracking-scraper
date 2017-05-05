@@ -38,7 +38,7 @@ class CorreiosSpider(scrapy.Spider):
 
             loader.add_value('location', location)
             loader.add_value('timestamp', timestamp)
-            loader.add_css('title', 'td.sroLbEvent > strong')
+            loader.add_css('event', 'td.sroLbEvent>strong::text')
             loader.add_css('description', 'td.sroLbEvent::text')
 
             yield loader.load_item()
