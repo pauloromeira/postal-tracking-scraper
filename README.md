@@ -15,8 +15,8 @@ A scraper that gathers tracking events from postal services.
 ### 1. Clone this repository
 Clone this repository using [git](https://git-scm.com/) and cd into the project folder:
 ```sh
-git clone https://github.com/pauloromeira/postal-tracking-scraper.git && \
-cd postal-tracking-scraper
+git clone https://github.com/pauloromeira/postaltracking-scraper.git && \
+cd postaltracking-scraper
 ```
 
 ### 2. Install Python requirements
